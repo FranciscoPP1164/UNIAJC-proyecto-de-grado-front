@@ -12,11 +12,17 @@ import { AuthService } from '../../../../services/api/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ISignupResponse } from '../../../../interfaces/responses/ISignup.response';
 import { ISignupRequest } from '../../../../interfaces/requests/ISignup.request';
+import { AuthLayoutComponent } from '../../../../layouts/auth/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, InputTextComponent],
+  imports: [
+    RouterModule,
+    ReactiveFormsModule,
+    AuthLayoutComponent,
+    InputTextComponent,
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
