@@ -1,0 +1,7 @@
+<div [formGroup]="formGroup" class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3"
+  [ngClass]="{'outline-error': error}">
+  <label [for]="name" class="text-xs md:text-sm font-medium text-secondary-2">{{label}}</label>
+  <input [type]="hidden ? 'password' : 'text'" [id]="name" [placeholder]="placeholder" [name]="name"
+    [formControlName]="name"
+    class="bg-none outline-none text-lg md:text-xl xl:text-2xl placeholder:text-gray-300 text-secondary-1">
+</div>
