@@ -1,1 +1,14 @@
-<p>menu-desktop works!</p>
+<div class="hidden md:block bg-primary-3 shadow-sm pl-8">
+  <ul class="w-1/2 flex">
+    @for (option of options; track $index) {
+    <li class="w-full relative">
+      <a [routerLink]="option.path"
+        class="block w-full py-2 px-3 text-center text-base text-primary-2 transition-all hover:text-white hover:font-medium"
+        [ngClass]="{'text-white font-medium': option.selected}">{{option.text}}</a>
+      @if (option.selected) {
+      <div class="h-1 w-full bg-white absolute bottom-0"></div>
+      }
+    </li>
+    }
+  </ul>
+</div>

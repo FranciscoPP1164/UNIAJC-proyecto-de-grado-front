@@ -4,11 +4,12 @@ import { MenuMovileComponent } from '../../../components/layouts/menus/menu-movi
 import { INavItemConfig } from '../../../interfaces/configs/INavItem.config';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../services/utils/local-storage.service';
+import { MenuDesktopComponent } from '../../../components/layouts/menus/menu-desktop/menu-desktop.component';
 
 @Component({
   selector: 'app-app-layout',
   standalone: true,
-  imports: [HeaderComponent, MenuMovileComponent],
+  imports: [HeaderComponent, MenuMovileComponent, MenuDesktopComponent],
   templateUrl: './app-layout.component.html',
   styleUrl: './app-layout.component.css',
 })
@@ -60,7 +61,7 @@ export class AppLayoutComponent implements OnInit {
     );
   }
 
-  public handleClickMenuButton(): void {
+  public handleClickMenuMovileButton(): void {
     this.isOpenMenu = !this.isOpenMenu;
     if (this.isOpenMenu) {
       this.localStorageService.store('openMenuMovile', 'true');
