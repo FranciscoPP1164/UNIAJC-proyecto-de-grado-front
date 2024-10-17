@@ -1,9 +1,8 @@
 import { IResponse } from './IResponse.response';
 
-export interface ILoginResponse extends IResponse {
+export interface ISignupResponse extends IResponse {
   name: string;
   email: string;
   type: string;
   status: string;
-  access_token: string;
 }

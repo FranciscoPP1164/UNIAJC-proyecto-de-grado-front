@@ -56,14 +56,19 @@ export class LoginComponent implements OnInit {
 
     this.authService
       .login(username, password)
-      .then((response: boolean) => {
+      .then(() => {
+        this.alertsService.make({
+          icon: 'success',
+          title: 'Sesión iniciada exitosamente',
+        });
+
         this.router.navigateByUrl('/');
       })
       .catch((error: HttpErrorResponse) => {
         if (error.status === 401) {
           this.alertsService.make({
             icon: 'error',
-            title: 'El usuario o la contraseña son incorrectos.',
+            title: 'El usuario o la contraseña son incorrectos',
           });
 
           return;
@@ -71,7 +76,7 @@ export class LoginComponent implements OnInit {
 
         this.alertsService.make({
           icon: 'error',
-          title: 'UPS, algo salió mal.',
+          title: 'UPS, algo salió mal',
         });
       });
   }

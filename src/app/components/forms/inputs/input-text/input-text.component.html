@@ -1,5 +1,5 @@
 <div [formGroup]="formGroup" class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3"
-  [ngClass]="{'outline-error': error}">
+  [class.!outline-error]="error">
   <label [for]="name" class="text-xs md:text-sm font-medium text-secondary-2">{{label}}</label>
   <input [type]="hidden ? 'password' : 'text'" [id]="name" [placeholder]="placeholder" [name]="name"
     [formControlName]="name"

@@ -9,7 +9,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: ':id',
+    path: 'detail/:id',
     loadComponent: () =>
       import('./views/detail/detail.component').then(
         ({ DetailComponent }) => DetailComponent
@@ -23,10 +23,14 @@ export const routes: Routes = [
       ),
   },
   {
-    path: ':id/update',
+    path: 'update/:id',
     loadComponent: () =>
       import('./views/update/update.component').then(
         ({ UpdateComponent }) => UpdateComponent
       ),
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];

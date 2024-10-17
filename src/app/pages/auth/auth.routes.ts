@@ -15,4 +15,8 @@ export const routes: Routes = [
         ({ SignupComponent }) => SignupComponent
       ),
   },
+  {
+    path: '**',
+    redirectTo: 'login',
+  },
 ];

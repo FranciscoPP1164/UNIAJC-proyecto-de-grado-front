@@ -4,6 +4,8 @@ import { ILoginResponse } from '../../interfaces/responses/ILogin.response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../utils/local-storage.service';
 import { ILoginRequest } from '../../interfaces/requests/ILogin.request';
+import { ISignupRequest } from '../../interfaces/requests/ISignup.request';
+import { ISignupResponse } from '../../interfaces/responses/ISignup.response';
 
 @Injectable({
   providedIn: 'root',
@@ -23,19 +25,34 @@ export class AuthService {
     }
   }
 
-  public login(name: string, password: string): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+  public login(name: string, password: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
       const data: ILoginRequest = { name, password };
 
       this.http.post<ILoginResponse>(`${this.url}/auth/login`, data).subscribe({
         next: (response: ILoginResponse) => {
           this.saveUser(response);
-          return resolve(true);
+          return resolve();
         },
         error: (error: HttpErrorResponse) => {
           return reject(error);
         },
       });
+    });
+  }
+
+  public signup(credentials: ISignupRequest): Promise<ISignupResponse> {
+    return new Promise<ISignupResponse>((resolve, reject) => {
+      this.http
+        .post<ISignupResponse>(`${this.url}/auth/signup`, credentials)
+        .subscribe({
+          next: (response: ISignupResponse) => {
+            return resolve(response);
+          },
+          error: (error: HttpErrorResponse) => {
+            return reject(error);
+          },
+        });
     });
   }
 
