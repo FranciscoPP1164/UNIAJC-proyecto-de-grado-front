@@ -16,8 +16,6 @@ export const authGuard: CanActivateFn = (route) => {
     return isRouteLogin || logoutAndRedirectoToLogin();
   }
 
-  console.log(isRouteLogin);
-
   return !isRouteLogin || redirectToHome();
 
   function logoutAndRedirectoToLogin(): boolean {

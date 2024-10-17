@@ -10,7 +10,6 @@ import { InputTextComponent } from '../../../../components/forms/inputs/input-te
 import { AlertsService } from '../../../../services/utils/alerts.service';
 import { AuthService } from '../../../../services/api/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ISignupResponse } from '../../../../interfaces/responses/ISignup.response';
 import { ISignupRequest } from '../../../../interfaces/requests/ISignup.request';
 import { AuthLayoutComponent } from '../../../../layouts/auth/auth-layout/auth-layout.component';
 

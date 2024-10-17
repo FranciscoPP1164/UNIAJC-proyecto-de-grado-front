@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { AppLayoutComponent } from '../../../../layouts/app/app-layout/app-layout.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-appointments-index',
   standalone: true,
   imports: [AppLayoutComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  templateUrl: './appointments-index.component.html',
+  styleUrl: './appointments-index.component.css',
 })
-export class HomeComponent {}
+export class AppointmentsIndexComponent {}

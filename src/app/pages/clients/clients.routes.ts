@@ -4,29 +4,29 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./views/index/index.component').then(
-        ({ IndexComponent }) => IndexComponent
+      import('./views/clients-index/clients-index.component').then(
+        ({ ClientsIndexComponent }) => ClientsIndexComponent
       ),
   },
   {
     path: 'detail/:id',
     loadComponent: () =>
-      import('./views/detail/detail.component').then(
-        ({ DetailComponent }) => DetailComponent
+      import('./views/clients-detail/clients-detail.component').then(
+        ({ ClientsDetailComponent }) => ClientsDetailComponent
       ),
   },
   {
     path: 'create',
     loadComponent: () =>
-      import('./views/create/create.component').then(
-        ({ CreateComponent }) => CreateComponent
+      import('./views/clients-create/clients-create.component').then(
+        ({ ClientsCreateComponent }) => ClientsCreateComponent
       ),
   },
   {
     path: 'update/:id',
     loadComponent: () =>
-      import('./views/update/update.component').then(
-        ({ UpdateComponent }) => UpdateComponent
+      import('./views/clients-update/clients-update.component').then(
+        ({ ClientsUpdateComponent }) => ClientsUpdateComponent
       ),
   },
   {

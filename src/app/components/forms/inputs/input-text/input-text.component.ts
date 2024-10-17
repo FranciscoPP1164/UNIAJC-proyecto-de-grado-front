@@ -10,11 +10,11 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './input-text.component.css',
 })
 export class InputTextComponent {
-  @Input() formGroup!: FormGroup;
-  @Input() label!: string;
-  @Input() name!: string;
-  @Input() placeholder: string = '';
-  @Input() hidden: boolean = false;
-  @Input() value: string = '';
-  @Input() error: boolean = false;
+  @Input() public formGroup!: FormGroup;
+  @Input() public label!: string;
+  @Input() public name!: string;
+  @Input() public placeholder: string = '';
+  @Input() public hidden: boolean = false;
+  @Input() public value: string = '';
+  @Input() public error: boolean = false;
 }

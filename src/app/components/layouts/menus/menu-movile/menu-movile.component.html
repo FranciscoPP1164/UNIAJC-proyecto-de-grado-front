@@ -1,0 +1,12 @@
+<div class="md:hidden bg-white w-4/5 h-full absolute transition-all duration-300 z-50 shadow-xl"
+  [ngClass]="{'-right-full': !isOpen, 'right-0': isOpen}">
+  <ul class="w-full">
+    @for (option of options; track $index) {
+    <li class="w-full">
+      <a [routerLink]="option.path"
+        class="block w-full border-b border-b-1 border-b-gray-200 py-2 px-3 text-gray-500 active:bg-gray-100"
+        [ngClass]="{'border-l-4 border-l-primary-3 text-gray-700 font-medium': option.selected}">{{option.text}}</a>
+    </li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,15 @@
+<div class="w-full h-svh flex-grow flex flex-col">
+  <div class="w-full h-full bg-primary-2 md:p-12">
+    <div
+      class="bg-white w-full h-full relative overflow-hidden flex flex-col md:rounded-sm md:shadow-md md:shadow-primary-1">
+      <app-header (onClickMenu)="handleClickMenuButton()" />
+      <app-menu-movile [isOpen]="isOpenMenu" [options]="options" />
+      <main class="h-full relative overflow-y-auto">
+        <div [class.hidden]="!isOpenMenu" (click)="handleClickMenuButton()"
+          class="absolute top-0 left-0 bg-gray-300 w-full h-full z-30 opacity-60 transition-colors duration-300 md:hidden">
+        </div>
+        <ng-content />
+      </main>
+    </div>
+  </div>
+</div>
