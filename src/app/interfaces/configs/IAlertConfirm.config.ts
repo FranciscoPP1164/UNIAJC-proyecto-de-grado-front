@@ -1,6 +1,6 @@
-import { IAlertsConfig } from './IAlerts.config';
+import { IAlertConfig } from './IAlert.config';
 
-export interface IAlertConfirmConfig extends IAlertsConfig {
+export interface IAlertConfirmConfig extends IAlertConfig {
   confirmButtonText: string;
   cancelButtonText: string;
 }

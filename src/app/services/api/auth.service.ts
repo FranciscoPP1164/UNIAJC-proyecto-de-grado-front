@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environtments/environtment';
-import { ILoginResponse } from '../../interfaces/responses/ILogin.response';
+import { ILoginResponse } from '../../interfaces/api/auth/ILogin.response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../utils/local-storage.service';
-import { ILoginRequest } from '../../interfaces/requests/ILogin.request';
-import { ISignupRequest } from '../../interfaces/requests/ISignup.request';
-import { ISignupResponse } from '../../interfaces/responses/ISignup.response';
+import { ILoginRequest } from '../../interfaces/api/auth/ILogin.request';
+import { ISignupRequest } from '../../interfaces/api/auth/ISignup.request';
+import { ISignupResponse } from '../../interfaces/api/auth/ISignup.response';
 
 @Injectable({
   providedIn: 'root',

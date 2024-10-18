@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IAlertsConfig } from '../../interfaces/configs/IAlerts.config';
+import { IAlertConfig } from '../../interfaces/configs/IAlert.config';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { IAlertConfirmConfig } from '../../interfaces/configs/IAlertConfirm.config';
 import { IAlertAskConfig } from '../../interfaces/configs/IAlertAsk.config';
@@ -8,7 +8,7 @@ import { IAlertAskConfig } from '../../interfaces/configs/IAlertAsk.config';
   providedIn: 'root',
 })
 export class AlertsService {
-  public make(config: IAlertsConfig): Promise<SweetAlertResult> {
+  public make(config: IAlertConfig): Promise<SweetAlertResult> {
     const alert = Swal.mixin({
       ...config,
       toast: true,
