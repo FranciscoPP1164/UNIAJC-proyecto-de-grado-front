@@ -41,7 +41,7 @@ export class UsersUpdateComponent implements OnInit {
       });
   }
 
-  handleSubmitCreateUserForm(user: IUpdateUserRequest): void {
+  handleSubmitUpdateUserForm(user: IUpdateUserRequest): void {
     this.usersService
       .update(user, this.id)
       .then(() => {

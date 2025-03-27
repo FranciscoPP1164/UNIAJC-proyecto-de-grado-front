@@ -1,1 +1,7 @@
-<p>patients-create works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Crear paciente</h1>
+  </div>
+
+  <app-patient-form (onSubmit)="handleSubmitCreatePatientForm($event)" />
+</app-app-layout>

@@ -3,10 +3,10 @@ import { environment } from '../../../environtments/environtment';
 import { IPagination } from '../../interfaces/api/IPagination.response';
 
 export abstract class GenericCrudService<Response, Request, Update> {
-  private readonly url: string = environment.api.url;
+  protected readonly url: string = environment.api.url;
   protected http!: HttpClient;
 
-  constructor(private service: string) {}
+  constructor(protected service: string) {}
 
   public all(
     page: number = 1,

@@ -1,1 +1,9 @@
-<p>patients-update works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Actualizar paciente</h1>
+  </div>
+
+  @if (patient) {
+  <app-patient-form [patient]="patient" (onSubmit)="handleSubmitUpdatePatientForm($event)" />
+  }
+</app-app-layout>

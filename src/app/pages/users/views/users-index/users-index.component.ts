@@ -55,7 +55,7 @@ export class UsersIndexComponent implements OnInit {
     this.alertsService
       .confirm({
         icon: 'warning',
-        title: '¿Estas seguro que deseas eleiminar este usuario?',
+        title: '¿Estas seguro que deseas eliminar este usuario?',
         text: 'Esta accion es irreversible',
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',

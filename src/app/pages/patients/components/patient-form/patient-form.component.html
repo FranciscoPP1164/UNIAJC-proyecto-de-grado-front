@@ -1,0 +1,19 @@
+<form class="md:w-3/5" [formGroup]="formPatient" (submit)="handleSubmitFormPatient()">
+  <app-input-text [formGroup]="formPatient" label="Nombre" name="name" placeholder="Ingrese el nombre del paciente"
+    [error]="didTrySubmitForm&&formData['name'].invalid" />
+
+  <app-input-text [formGroup]="formPatient" label="Edad" name="age" placeholder="Ingrese la edad del paciente"
+    [error]="didTrySubmitForm&&formData['age'].invalid" />
+
+  <app-input-text [formGroup]="formPatient" label="Dirección" name="direction"
+    placeholder="Ingrese la dirección del paciente" [error]="didTrySubmitForm&&formData['direction'].invalid" />
+
+  <app-input-text [formGroup]="formPatient" label="Documento de identificación" name="document_identification"
+    placeholder="Ingrese el documento de identificación del paciente"
+    [error]="didTrySubmitForm&&formData['document_identification'].invalid" />
+
+  <button type="submit"
+    class="bg-secondary-1 hover:bg-primary-1 transition-all mt-5 py-2 px-4 md:py-3 text-xl md:text-2xl xl:text-3xl rounded-lg text-white">
+    Guardar
+  </button>
+</form>

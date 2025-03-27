@@ -1,9 +1,9 @@
 <app-app-layout>
   <div class="mb-4">
-    <h1 class="text-secondary-2 text-3xl">Usuarios</h1>
+    <h1 class="text-secondary-2 text-3xl">Actualizar usuario</h1>
   </div>
 
   @if (user) {
-  <app-user-form [user]="user" (onSubmit)="handleSubmitCreateUserForm($event)" />
+  <app-user-form [user]="user" (onSubmit)="handleSubmitUpdateUserForm($event)" />
   }
 </app-app-layout>

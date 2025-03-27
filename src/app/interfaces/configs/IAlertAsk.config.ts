@@ -3,4 +3,5 @@ export interface IAlertAskConfig {
   input: any;
   inputLabel: string;
   validationMessage?: string;
+  inputValue?: string;
 }
