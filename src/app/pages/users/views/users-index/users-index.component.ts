@@ -2,16 +2,85 @@ import { Component, OnInit } from '@angular/core';
 import { AppLayoutComponent } from '../../../../layouts/app/app-layout/app-layout.component';
 import { UsersService } from '../../../../services/api/users.service';
 import { IUserResponse } from '../../../../interfaces/api/users/IUser.response';
+import { AlertsService } from '../../../../services/utils/alerts.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-users-index',
   standalone: true,
-  imports: [AppLayoutComponent],
+  imports: [AppLayoutComponent, CommonModule],
   templateUrl: './users-index.component.html',
   styleUrl: './users-index.component.css',
 })
 export class UsersIndexComponent implements OnInit {
-  public constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private alertsService: AlertsService,
+    private router: Router
+  ) {}
 
-  public ngOnInit(): void {}
+  users!: IUserResponse[];
+
+  ngOnInit(): void {
+    this.getUsers();
+  }
+
+  private getUsers(): void {
+    this.usersService
+      .all()
+      .then((users) => {
+        this.users = users.data;
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.alertsService.make({
+          icon: 'error',
+          title: 'Error',
+          text: error.error.errors,
+        });
+      });
+  }
+
+  handleClickAddUserButton(): void {
+    this.router.navigateByUrl('users/create');
+  }
+
+  handleClickEditUserButton(id: string): void {
+    this.router.navigateByUrl(`users/update/${id}`);
+  }
+
+  handleClickDeleteUserButton(id: string): void {
+    this.alertsService
+      .confirm({
+        icon: 'warning',
+        title: '¿Estas seguro que deseas eleiminar este usuario?',
+        text: 'Esta accion es irreversible',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+      })
+      .then((result: SweetAlertResult) => {
+        if (!result.isConfirmed) {
+          return;
+        }
+
+        this.usersService
+          .delete(id)
+          .then(() => {
+            this.alertsService.make({
+              icon: 'success',
+              title: 'Usuario eliminado',
+            });
+            this.getUsers();
+          })
+          .catch((error: HttpErrorResponse) => {
+            this.alertsService.make({
+              icon: 'error',
+              title: 'Error',
+              text: error.error.errors,
+            });
+          });
+      });
+  }
 }

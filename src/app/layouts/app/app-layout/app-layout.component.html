@@ -9,7 +9,9 @@
         <div [class.hidden]="!isOpenMenu" (click)="handleClickMenuMovileButton()"
           class="absolute top-0 left-0 bg-gray-300 w-full h-full z-30 opacity-60 transition-colors duration-300 md:hidden">
         </div>
-        <ng-content />
+        <div class="p-11">
+          <ng-content />
+        </div>
       </main>
     </div>
   </div>

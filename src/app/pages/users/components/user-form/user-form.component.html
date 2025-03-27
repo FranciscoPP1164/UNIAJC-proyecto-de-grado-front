@@ -1,0 +1,29 @@
+<form class="md:w-3/5" [formGroup]="formUser" (submit)="handleSubmitFormUser()">
+  <app-input-text [formGroup]="formUser" label="Usuario" name="name" placeholder="Ingrese el nombre del usuario"
+    [error]="didTrySubmitForm&&formData['name'].invalid" />
+  <app-input-text [formGroup]="formUser" label="Correo" name="email" placeholder="Ingrese el correo del usuario"
+    [error]="didTrySubmitForm&&formData['email'].invalid" />
+
+  <div class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3">
+    <label class="text-xs md:text-sm font-medium text-secondary-2">Perfil</label>
+    <select formControlName="type"
+      class="bg-white outline-none text-lg md:text-xl xl:text-2xl placeholder:text-gray-300 text-secondary-1">
+      <option value="admin">Administrador</option>
+      <option value="nurse">Enfermero</option>
+    </select>
+  </div>
+
+  <div class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3">
+    <label class="text-xs md:text-sm font-medium text-secondary-2">Estado</label>
+    <select formControlName="status"
+      class="bg-white outline-none text-lg md:text-xl xl:text-2xl placeholder:text-gray-300 text-secondary-1">
+      <option value="active">Activo</option>
+      <option value="inactive">Inactivo</option>
+    </select>
+  </div>
+
+  <button type="submit"
+    class="bg-secondary-1 hover:bg-primary-1 transition-all mt-5 py-2 px-4 md:py-3 text-xl md:text-2xl xl:text-3xl rounded-lg text-white">
+    Guardar
+  </button>
+</form>

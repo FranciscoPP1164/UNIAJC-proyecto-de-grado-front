@@ -1,1 +1,7 @@
-<p>users-create works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Usuarios</h1>
+  </div>
+
+  <app-user-form (onSubmit)="handleSubmitCreateUserForm($event)" />
+</app-app-layout>

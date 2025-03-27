@@ -18,7 +18,7 @@ export class AppLayoutComponent implements OnInit {
   public options: INavItemConfig[] = [
     {
       text: 'Home',
-      path: '/',
+      path: '/home',
     },
     {
       text: 'Citas',
@@ -51,7 +51,7 @@ export class AppLayoutComponent implements OnInit {
     const route = this.router.url;
 
     this.options.forEach((option) => {
-      if (option.path === route) {
+      if (route.startsWith(option.path)) {
         option.selected = true;
       }
     });

@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environtments/environtment';
+import { IPagination } from '../../interfaces/api/IPagination.response';
 
 export abstract class GenericCrudService<Response, Request, Update> {
   private readonly url: string = environment.api.url;
@@ -7,14 +8,17 @@ export abstract class GenericCrudService<Response, Request, Update> {
 
   constructor(private service: string) {}
 
-  public all(page: number = 1, rowsPerPage: number = 10): Promise<Response[]> {
-    return new Promise<Response[]>((resolve, reject) => {
+  public all(
+    page: number = 1,
+    rowsPerPage: number = 10
+  ): Promise<IPagination<Response>> {
+    return new Promise<IPagination<Response>>((resolve, reject) => {
       this.http
-        .get<Response[]>(
+        .get<IPagination<Response>>(
           `${this.url}/${this.service}?page=${page}&rowsPerPage=${rowsPerPage}`
         )
         .subscribe({
-          next: (response: Response[]) => {
+          next: (response: IPagination<Response>) => {
             return resolve(response);
           },
           error: (error: HttpErrorResponse) => {

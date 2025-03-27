@@ -25,7 +25,7 @@ export const authGuard: CanActivateFn = (route) => {
   }
 
   function redirectToHome(): boolean {
-    router.navigateByUrl('');
+    router.navigateByUrl('/home');
     return false;
   }
 };
