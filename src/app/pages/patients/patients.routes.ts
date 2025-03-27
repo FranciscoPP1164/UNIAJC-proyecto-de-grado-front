@@ -30,6 +30,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'trashed',
+    loadComponent: () =>
+      import('./views/patients-trashed/patients-trashed.component').then(
+        ({ PatientsTrashedComponent }) => PatientsTrashedComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

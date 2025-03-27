@@ -47,7 +47,7 @@ export class PatientsIndexComponent implements OnInit {
   }
 
   handleClickTrashedPatientsButton(): void {
-    this.router.navigateByUrl('patients/trash');
+    this.router.navigateByUrl('patients/trashed');
   }
 
   handleClickDetailPatientButton(id: string): void {

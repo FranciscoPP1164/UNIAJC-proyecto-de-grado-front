@@ -84,6 +84,26 @@ export abstract class GenericCrudService<Response, Request, Update> {
     });
   }
 
+  public trashed(
+    page: number = 1,
+    rowsPerPage: number = 10
+  ): Promise<IPagination<Response>> {
+    return new Promise<IPagination<Response>>((resolve, reject) => {
+      this.http
+        .get<IPagination<Response>>(
+          `${this.url}/${this.service}/trashed/?page=${page}&rowsPerPage=${rowsPerPage}`
+        )
+        .subscribe({
+          next: (response: IPagination<Response>) => {
+            return resolve(response);
+          },
+          error: (error: HttpErrorResponse) => {
+            return reject(error);
+          },
+        });
+    });
+  }
+
   public restore(id: string): Promise<Response> {
     return new Promise<Response>((resolve, reject) => {
       this.http
