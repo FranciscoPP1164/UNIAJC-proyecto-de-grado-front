@@ -13,45 +13,23 @@
   <table class="mt-2 w-full shadow-md rounded-sm overflow-hidden">
     <thead class="bg-secondary-1 text-2xl text-white">
       <tr>
-        <th class="w-1/5 font-medium p-4">Usuario</th>
-        <th class="w-1/5 font-medium p-4">Correo</th>
-        <th class="w-1/5 font-medium p-4">Perfil</th>
-        <th class="w-1/5 font-medium p-4">Estado</th>
-        <th class="w-1/5 font-medium p-4">Opciones</th>
+        <th class="w-1/4 font-medium p-4">Usuario</th>
+        <th class="w-1/4 font-medium p-4">Correo</th>
+        <th class="w-1/4 font-medium p-4">Perfil</th>
       </tr>
     </thead>
     <tbody>
       @for (user of users; track user.id) {
-      <tr class="hover:bg-gray-50">
+      @if (user.type !== 'root') {
+      <div class="absolute left-2">
+        <app-row-options-menu (onSelect)="handleSelectOptionMenu(user.id, $event)" />
+      </div>
+      }
+
+      <tr class="hover:bg-gray-50" [ngClass]="{'text-gray-400 !bg-gray-300': user.status === 'inactive'}">
         <td class="px-4 py-3 text-lg">{{user.name}}</td>
         <td class="px-4 py-3 text-lg">{{user.email}}</td>
         <td class="px-4 py-3 text-lg">{{user.type === 'admin' ? 'Administrador' : 'Enfermero'}}</td>
-        <td class="px-4 py-3 text-lg flex justify-center">
-          <p class="border border-solid rounded-xl w-fit px-7 py-1 bg-opacity-10" [ngClass]="{
-                'border-primary-3 bg-primary-3 text-primary-3': user.status === 'active',
-                'border-error bg-error text-error': user.status === 'inactive'
-              }">
-            {{user.status === 'active' ? 'Activo' : 'Inactivo'}}
-          </p>
-        </td>
-        <td>
-          <div class="flex justify-center gap-x-6">
-            <button (click)="handleClickEditUserButton(user.id)"
-              class="border-2 border-solid border-primary-3 size-10 fill-primary-3 rounded-md flex justify-center items-center hover:bg-primary-3 hover:fill-white transition">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="size-4/5">
-                <path
-                  d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
-              </svg>
-            </button>
-            <button (click)="handleClickDeleteUserButton(user.id)"
-              class="border-2 border-solid border-error size-10 fill-error rounded-md flex justify-center items-center hover:bg-error hover:fill-white transition">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4/5">
-                <path
-                  d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
-              </svg>
-            </button>
-          </div>
-        </td>
       </tr>
       }
     </tbody>

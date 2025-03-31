@@ -7,11 +7,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SweetAlertResult } from 'sweetalert2';
+import { RowOptionsMenuComponent } from '../../../../components/row-options-menu/row-options-menu.component';
 
 @Component({
   selector: 'app-users-index',
   standalone: true,
-  imports: [AppLayoutComponent, CommonModule],
+  imports: [AppLayoutComponent, RowOptionsMenuComponent, CommonModule],
   templateUrl: './users-index.component.html',
   styleUrl: './users-index.component.css',
 })
@@ -45,6 +46,21 @@ export class UsersIndexComponent implements OnInit {
 
   handleClickAddUserButton(): void {
     this.router.navigateByUrl('users/create');
+  }
+
+  handleSelectOptionMenu(id: string, action: 'edit' | 'delete'): void {
+    switch (action) {
+      case 'edit':
+        this.handleClickEditUserButton(id);
+        break;
+
+      case 'delete':
+        this.handleClickDeleteUserButton(id);
+        break;
+
+      default:
+        break;
+    }
   }
 
   handleClickEditUserButton(id: string): void {

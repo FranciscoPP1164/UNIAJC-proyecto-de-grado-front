@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { IPatientResponse } from '../../../../interfaces/api/patients/IPatient.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SweetAlertResult } from 'sweetalert2';
+import { RowOptionsMenuComponent } from '../../../../components/row-options-menu/row-options-menu.component';
 
 @Component({
   selector: 'app-patients-index',
   standalone: true,
-  imports: [AppLayoutComponent],
+  imports: [AppLayoutComponent, RowOptionsMenuComponent],
   templateUrl: './patients-index.component.html',
   styleUrl: './patients-index.component.css',
 })
@@ -52,6 +53,21 @@ export class PatientsIndexComponent implements OnInit {
 
   handleClickDetailPatientButton(id: string): void {
     this.router.navigateByUrl(`patients/detail/${id}`);
+  }
+
+  handleSelectOptionMenu(id: string, action: 'edit' | 'delete'): void {
+    switch (action) {
+      case 'edit':
+        this.handleClickEditPatientButton(id);
+        break;
+
+      case 'delete':
+        this.handleClickDeletePatientButton(id);
+        break;
+
+      default:
+        break;
+    }
   }
 
   handleClickEditPatientButton(id: string): void {
