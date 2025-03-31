@@ -30,6 +30,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'trashed',
+    loadComponent: () =>
+      import('./views/clients-trashed/clients-trashed.component').then(
+        ({ ClientsTrashedComponent }) => ClientsTrashedComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

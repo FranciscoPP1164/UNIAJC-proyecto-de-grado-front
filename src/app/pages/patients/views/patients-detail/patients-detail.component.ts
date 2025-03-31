@@ -91,6 +91,10 @@ export class PatientsDetailComponent implements OnInit {
         input: 'text',
       })
       .then(async (result: SweetAlertResult) => {
+        if (!result.isConfirmed) {
+          return;
+        }
+
         if (!result.value) {
           this.alertsService.make({
             icon: 'warning',
@@ -130,6 +134,10 @@ export class PatientsDetailComponent implements OnInit {
         inputValue: condition.description,
       })
       .then(async (result: SweetAlertResult) => {
+        if (!result.isConfirmed) {
+          return;
+        }
+
         if (!result.value) {
           this.alertsService.make({
             icon: 'warning',

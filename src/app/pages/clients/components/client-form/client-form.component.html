@@ -1,0 +1,19 @@
+<form class="md:w-3/5" [formGroup]="formClient" (submit)="handleSubmitFormClient()">
+  <app-input-text [formGroup]="formClient" label="Nombre" name="name" placeholder="Ingrese el nombre del cliente"
+    [error]="didTrySubmitForm&&formData['name'].invalid" />
+
+  <app-input-text [formGroup]="formClient" label="Correo electrónico" name="email"
+    placeholder="Ingrese el correo electrónico del paciente" [error]="didTrySubmitForm&&formData['email'].invalid" />
+
+  <app-input-text [formGroup]="formClient" label="Teléfono" name="phone" placeholder="Ingrese el teléfono del cliente"
+    [error]="didTrySubmitForm&&formData['phone'].invalid" />
+
+  <app-input-text [formGroup]="formClient" label="Documento de identificación" name="document_identification"
+    placeholder="Ingrese el documento de identificación del cliente"
+    [error]="didTrySubmitForm&&formData['document_identification'].invalid" />
+
+  <button type="submit"
+    class="bg-secondary-1 hover:bg-primary-1 transition-all mt-5 py-2 px-4 md:py-3 text-xl md:text-2xl xl:text-3xl rounded-lg text-white">
+    Guardar
+  </button>
+</form>

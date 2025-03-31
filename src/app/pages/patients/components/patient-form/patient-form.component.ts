@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IPatientResponse } from '../../../../interfaces/api/patients/IPatient.response';
 import { IPatientRequest } from '../../../../interfaces/api/patients/IPatient.request';
 import {
@@ -16,7 +16,7 @@ import { InputTextComponent } from '../../../../components/forms/inputs/input-te
   templateUrl: './patient-form.component.html',
   styleUrl: './patient-form.component.css',
 })
-export class PatientFormComponent {
+export class PatientFormComponent implements OnInit {
   @Input() patient?: IPatientResponse;
   @Output() onSubmit = new EventEmitter<IPatientRequest>();
 
@@ -47,9 +47,9 @@ export class PatientFormComponent {
       return;
     }
 
-    const user = this.formPatient.value;
+    const patient = this.formPatient.value;
 
-    this.onSubmit.emit(user);
+    this.onSubmit.emit(patient);
   }
 
   get formData() {

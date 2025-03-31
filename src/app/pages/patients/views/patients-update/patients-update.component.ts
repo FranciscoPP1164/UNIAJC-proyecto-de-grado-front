@@ -41,9 +41,9 @@ export class PatientsUpdateComponent implements OnInit {
       });
   }
 
-  handleSubmitUpdatePatientForm(user: IUpdatePatientRequest): void {
+  handleSubmitUpdatePatientForm(patient: IUpdatePatientRequest): void {
     this.patientsService
-      .update(user, this.id)
+      .update(patient, this.id)
       .then(() => {
         this.router.navigateByUrl('/patients');
         this.alertsService.make({

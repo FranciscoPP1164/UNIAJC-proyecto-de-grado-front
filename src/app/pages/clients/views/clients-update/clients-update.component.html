@@ -1,1 +1,9 @@
-<p>clients-update works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Actualizar cliente</h1>
+  </div>
+
+  @if (client) {
+  <app-client-form [client]="client" (onSubmit)="handleSubmitUpdateClientForm($event)" />
+  }
+</app-app-layout>
