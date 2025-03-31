@@ -24,7 +24,7 @@
     <thead class="bg-secondary-1 text-2xl text-white">
       <tr>
         <th class="w-1/5 font-medium p-4">Nombre</th>
-        <th class="w-1/5 font-medium p-4">Edad</th>
+        <th class="w-1/5 font-medium p-4">Fecha de nacimiento</th>
         <th class="w-1/5 font-medium p-4">Dirección</th>
         <th class="w-1/5 font-medium p-4">Documento</th>
       </tr>
@@ -37,7 +37,7 @@
 
       <tr class="hover:bg-gray-50" (click)="handleClickDetailPatientButton(patient.id)">
         <td class="px-4 py-4 text-lg">{{patient.name}}</td>
-        <td class="px-4 py-4 text-lg">{{patient.age}}</td>
+        <td class="px-4 py-4 text-lg">{{patient.birthdate | date: 'Y-MM-dd'}}</td>
         <td class="px-4 py-4 text-lg">{{patient.direction}}</td>
         <td class="px-4 py-4 text-lg flex justify-center">{{patient.document_identification}}</td>
       </tr>

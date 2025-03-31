@@ -29,9 +29,9 @@
     </div>
 
     <div class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3 w-full">
-      <label class="text-xs md:text-sm font-medium text-secondary-2">Edad</label>
+      <label class="text-xs md:text-sm font-medium text-secondary-2">Fecha de nacimiento</label>
       <span class="bg-none outline-none text-lg md:text-xl xl:text-2xl placeholder:text-gray-300 text-secondary-1">
-        {{patient.age}}
+        {{patient.birthdate | date: 'Y-MM-dd'}}
       </span>
     </div>
 

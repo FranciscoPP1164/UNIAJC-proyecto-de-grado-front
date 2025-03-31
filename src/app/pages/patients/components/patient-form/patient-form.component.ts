@@ -32,7 +32,7 @@ export class PatientFormComponent {
   buildPatientForm(): void {
     this.formPatient = this.formBuilder.group({
       name: [this.patient?.name, [Validators.required]],
-      age: [this.patient?.age, [Validators.required]],
+      birthdate: [this.patient?.birthdate, [Validators.required]],
       direction: [this.patient?.direction, [Validators.required]],
       document_identification: [
         this.patient?.document_identification,

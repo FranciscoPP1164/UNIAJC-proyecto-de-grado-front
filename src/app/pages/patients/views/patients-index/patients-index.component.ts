@@ -7,11 +7,12 @@ import { IPatientResponse } from '../../../../interfaces/api/patients/IPatient.r
 import { HttpErrorResponse } from '@angular/common/http';
 import { SweetAlertResult } from 'sweetalert2';
 import { RowOptionsMenuComponent } from '../../../../components/row-options-menu/row-options-menu.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-patients-index',
   standalone: true,
-  imports: [AppLayoutComponent, RowOptionsMenuComponent],
+  imports: [AppLayoutComponent, RowOptionsMenuComponent, CommonModule],
   templateUrl: './patients-index.component.html',
   styleUrl: './patients-index.component.css',
 })

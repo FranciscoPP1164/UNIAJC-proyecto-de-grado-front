@@ -6,11 +6,12 @@ import { AlertsService } from '../../../../services/utils/alerts.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SweetAlertResult } from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-patients-detail',
   standalone: true,
-  imports: [AppLayoutComponent],
+  imports: [AppLayoutComponent, CommonModule],
   templateUrl: './patients-detail.component.html',
   styleUrl: './patients-detail.component.css',
 })

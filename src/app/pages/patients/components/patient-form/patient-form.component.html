@@ -2,8 +2,13 @@
   <app-input-text [formGroup]="formPatient" label="Nombre" name="name" placeholder="Ingrese el nombre del paciente"
     [error]="didTrySubmitForm&&formData['name'].invalid" />
 
-  <app-input-text [formGroup]="formPatient" label="Edad" name="age" placeholder="Ingrese la edad del paciente"
-    [error]="didTrySubmitForm&&formData['age'].invalid" />
+  <div class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3"
+    [class.!outline-error]="didTrySubmitForm&&formData['birthdate'].invalid">
+    <label for="birthdate" class="text-xs md:text-sm font-medium text-secondary-2">Fecha de nacimiento</label>
+    <input type="date" id="birthdate" placeholder="Ingrese la fecha de nacimiento del paciente" name="birthdate"
+      formControlName="birthdate"
+      class="bg-none outline-none text-lg md:text-xl xl:text-2xl placeholder:text-gray-300 text-secondary-1">
+  </div>
 
   <app-input-text [formGroup]="formPatient" label="Dirección" name="direction"
     placeholder="Ingrese la dirección del paciente" [error]="didTrySubmitForm&&formData['direction'].invalid" />

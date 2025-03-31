@@ -3,7 +3,7 @@ import { IConditionResponse } from './ICondition.response';
 
 export interface IPatientResponse extends IResponse {
   name: string;
-  age: number;
+  birthdate: Date;
   direction: string;
   document_identification: string;
   conditions?: IConditionResponse[];

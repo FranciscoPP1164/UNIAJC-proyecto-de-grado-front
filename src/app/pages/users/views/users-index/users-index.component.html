@@ -29,7 +29,13 @@
       <tr class="hover:bg-gray-50" [ngClass]="{'text-gray-400 !bg-gray-300': user.status === 'inactive'}">
         <td class="px-4 py-3 text-lg">{{user.name}}</td>
         <td class="px-4 py-3 text-lg">{{user.email}}</td>
-        <td class="px-4 py-3 text-lg">{{user.type === 'admin' ? 'Administrador' : 'Enfermero'}}</td>
+        <td class="px-4 py-3 text-lg">
+          @switch (user.type) {
+          @case ('root') {Raiz}
+          @case ('admin') {Administrador}
+          @case ('nurse') {Enfermero}
+          }
+        </td>
       </tr>
       }
     </tbody>
