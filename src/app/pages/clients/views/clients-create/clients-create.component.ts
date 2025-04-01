@@ -22,8 +22,6 @@ export class ClientsCreateComponent {
   ) {}
 
   handleSubmitCreateClientForm(client: IClientRequest): void {
-    console.log(client);
-
     this.clientsService
       .create(client)
       .then(() => {

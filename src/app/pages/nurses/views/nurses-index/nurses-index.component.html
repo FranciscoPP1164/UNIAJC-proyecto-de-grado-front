@@ -1,3 +1,54 @@
 <app-app-layout>
-  <p>nurses-index works!</p>
+  <div class="flex justify-between">
+    <h1 class="text-secondary-2 text-3xl">Clientes</h1>
+    <div class="flex gap-x-6">
+      <button (click)="handleClickAddNurseButton()"
+        class="border-2 border-solid border-primary-3 size-10 fill-primary-3 rounded-md flex justify-center items-center hover:bg-primary-3 hover:fill-white transition">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4/5">
+          <path
+            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
+        </svg>
+      </button>
+
+      <button (click)="handleClickTrashedNursesButton()"
+        class="border-2 border-solid border-error size-10 fill-error rounded-md flex justify-center items-center hover:bg-error hover:fill-white transition">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4/5">
+          <path
+            d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <table class="mt-2 w-full shadow-md rounded-sm overflow-hidden">
+    <thead class="bg-secondary-1 text-2xl text-white">
+      <tr>
+        <th class="w-1/5 font-medium p-4">Nombre</th>
+        <th class="w-1/5 font-medium p-4">Genero</th>
+        <th class="w-1/5 font-medium p-4">Correo electronico</th>
+        <th class="w-1/5 font-medium p-4">Teléfono</th>
+        <th class="w-1/5 font-medium p-4">Documento</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (nurse of nurses; track nurse.id) {
+      <div class="absolute left-2">
+        <app-row-options-menu (onSelect)="handleSelectOptionMenu(nurse.id, $event)" />
+      </div>
+
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-4 text-lg">{{nurse.name}}</td>
+        <td class="px-4 py-4 text-lg">
+          @switch (nurse.genre) {
+          @case ('male') {Masculino}
+          @case ('female') {Femenino}
+          }
+        </td>
+        <td class="px-4 py-4 text-lg">{{nurse.email}}</td>
+        <td class="px-4 py-4 text-lg">{{nurse.phone}}</td>
+        <td class="px-4 py-4 text-lg flex justify-center">{{nurse.document_identification}}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
 </app-app-layout>

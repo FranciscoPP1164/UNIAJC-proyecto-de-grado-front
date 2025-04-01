@@ -1,1 +1,9 @@
-<p>nurses-update works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Actualizar enfermero</h1>
+  </div>
+
+  @if (nurse) {
+  <app-nurse-form [nurse]="nurse" (onSubmit)="handleSubmitUpdateNurseForm($event)" />
+  }
+</app-app-layout>

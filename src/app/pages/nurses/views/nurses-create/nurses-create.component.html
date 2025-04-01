@@ -1,1 +1,7 @@
-<p>nurses-create works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Crear enfermero</h1>
+  </div>
+
+  <app-nurse-form (onSubmit)="handleSubmitCreateNurseForm($event)" />
+</app-app-layout>
