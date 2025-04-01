@@ -6,6 +6,8 @@ import { LocalStorageService } from '../utils/local-storage.service';
 import { ILoginRequest } from '../../interfaces/api/auth/ILogin.request';
 import { ISignupRequest } from '../../interfaces/api/auth/ISignup.request';
 import { ISignupResponse } from '../../interfaces/api/auth/ISignup.response';
+import { IRegisterRequest } from '../../interfaces/api/auth/IRegister.request';
+import { IUserResponse } from '../../interfaces/api/users/IUser.response';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +49,28 @@ export class AuthService {
         .post<ISignupResponse>(`${this.url}/auth/signup`, credentials)
         .subscribe({
           next: (response: ISignupResponse) => {
+            return resolve(response);
+          },
+          error: (error: HttpErrorResponse) => {
+            return reject(error);
+          },
+        });
+    });
+  }
+
+  public register(
+    credentials: IRegisterRequest,
+    id: string,
+    verifyToken: string
+  ): Promise<IUserResponse> {
+    return new Promise<IUserResponse>((resolve, reject) => {
+      this.http
+        .post<IUserResponse>(
+          `${this.url}/auth/register/${id}?verificationToken=${verifyToken}`,
+          credentials
+        )
+        .subscribe({
+          next: (response: IUserResponse) => {
             return resolve(response);
           },
           error: (error: HttpErrorResponse) => {

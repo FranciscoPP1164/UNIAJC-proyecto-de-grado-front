@@ -1,0 +1,14 @@
+<app-auth-layout>
+  <h1 class="text-4xl text-secondary-2">Registrar contraseña</h1>
+  <form [formGroup]="formRegister" (ngSubmit)="handleSubmitFormLogin()" class="flex flex-col p-6 w-full">
+    <app-input-text [formGroup]="formRegister" label="Contraseña" name="password" placeholder="Ingrese su contraseña"
+      [error]="didTrySignIn&&formData['password'].invalid" [hidden]="true" />
+    <app-input-text [formGroup]="formRegister" label="Confirmar contraseña" name="confirm_password"
+      placeholder="Confirme la contraseña" [error]="didTrySignIn&&formData['confirm_password'].invalid"
+      [hidden]="true" />
+    <button type="submit"
+      class="bg-secondary-1 hover:bg-primary-1 transition-all mt-10 xl:mt-16 py-3 md:py-5 text-xl md:text-2xl xl:text-3xl rounded-sm text-white">
+      Registrar contraseña
+    </button>
+  </form>
+</app-auth-layout>

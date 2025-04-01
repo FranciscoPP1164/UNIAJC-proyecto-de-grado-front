@@ -18,6 +18,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./views/register/register.component').then(
+        ({ RegisterComponent }) => RegisterComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'login',
   },
