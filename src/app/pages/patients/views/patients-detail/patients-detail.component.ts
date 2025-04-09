@@ -35,7 +35,6 @@ export class PatientsDetailComponent implements OnInit {
       .get(this.id)
       .then((patient: IPatientResponse) => {
         this.patient = patient;
-        console.log(this.patient);
       })
       .catch((error: HttpErrorResponse) => {
         this.alertsService.make({

@@ -7,12 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InputTextComponent } from '../../../../components/forms/inputs/input-text/input-text.component';
 
 @Component({
   selector: 'app-nurse-form',
   standalone: true,
-  imports: [InputTextComponent, ReactiveFormsModule],
+  imports: [ ReactiveFormsModule],
   templateUrl: './nurse-form.component.html',
   styleUrl: './nurse-form.component.css',
 })
@@ -32,7 +31,7 @@ export class NurseFormComponent {
   buildClientForm(): void {
     this.formNurse = this.formBuilder.group({
       name: [this.nurse?.name, [Validators.required]],
-      genre: [this.nurse?.genre, [Validators.required]],
+      genre: [this.nurse?.genre ?? 'male', [Validators.required]],
       email: [this.nurse?.email, [Validators.required]],
       phone: [this.nurse?.phone, [Validators.required]],
       document_identification: [

@@ -1,1 +1,230 @@
-<p>appointments-detail works!</p>
+<app-app-layout>
+  @if (appointment) {
+  <div class="mb-6 flex items-center justify-between">
+    <h2 class="text-2xl font-semibold text-secondary-2">Detalles de la Cita</h2>
+    <div class="flex gap-3">
+      @if (appointment.status === 'pending') {
+      <button (click)="handleClickEditAppointmentButton()"
+        class="rounded-lg bg-primary-3 px-4 py-2 font-medium text-white hover:bg-opacity-90">
+        Editar
+      </button>
+
+      <button (click)="handleClickStartAppointmentButton()"
+        class="rounded-lg bg-yellow-400 px-4 py-2 font-medium text-white hover:bg-opacity-90">
+        Iniciar
+      </button>
+      }
+
+      @if (appointment.status === 'pending' || appointment.status === 'started') {
+      <button (click)="handleClickCancelAppointmentButton()"
+        class="rounded-lg bg-red-400 px-4 py-2 font-medium text-white hover:bg-opacity-90">
+        Cancelar
+      </button>
+      }
+
+      @if (appointment.status === 'started') {
+      <button (click)="handleClickEndAppointmentButton()"
+        class="rounded-lg bg-green-500 px-4 py-2 font-medium text-white hover:bg-opacity-90">
+        Finalizar
+      </button>
+      }
+    </div>
+  </div>
+
+  <div class="grid gap-16 rounded-lg bg-white p-6 md:grid-cols-2">
+    <!-- Left Column -->
+    <div class="space-y-6">
+      <!-- Appointment Time -->
+      <div class="rounded-lg border-l-4 border-secondary-2 bg-primary-1 p-4">
+        <div class="flex items-center gap-3">
+          <div class="rounded-full bg-secondary-2 p-2 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-medium text-secondary-2">Horario</h3>
+            <p class="text-gray-700">
+              {{appointment.start_datetime | date}} • {{appointment.start_datetime | date: 'hh:mm a'}} -
+              {{appointment.end_datetime | date: 'hh:mm a'}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Details -->
+      <div class="space-y-4">
+        <h3 class="border-b border-primary-1 pb-2 text-lg font-semibold text-secondary-2">Servicio</h3>
+        <div>
+          <p class="font-medium">{{appointment.tittle}}</p>
+          <p class="text-primary-3">{{appointment.description}}</p>
+        </div>
+      </div>
+
+      <!-- Patient Information -->
+      <div class="space-y-4">
+        <h3 class="border-b border-primary-1 pb-2 text-lg font-semibold text-secondary-2">Pacientes</h3>
+        @for (patient of appointment.patients; track patient.id) {
+        <div class="flex items-center gap-4">
+          <div
+            class="h-12 w-12 rounded-full bg-primary-1 flex items-center justify-center text-secondary-2 font-medium">
+            {{getInitials(patient.name)}}
+          </div>
+          <div>
+            <p class="font-medium">{{patient.name}}</p>
+            <p class="text-sm text-primary-3">Cédula: {{patient.document_identification}}</p>
+            <p class="text-sm text-primary-3">Fecha de nacimiento: {{patient.birthdate}}</p>
+          </div>
+        </div>
+        }
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="border-b border-primary-1 pb-2 text-lg font-semibold text-secondary-2">Condiciones de los pacientes
+        </h3>
+        @for (patient of appointment.patients; track patient.id) {
+        @if (patient.conditions && patient.conditions.length > 0) {
+        <div>
+          <p class="font-medium">{{patient.name}}</p>
+          <p class="rounded-lg bg-primary-1 p-3 text-sm">
+            @for (condition of patient.conditions; track condition.id) {
+            • {{condition.description}}
+            }
+          </p>
+        </div>
+        }
+        }
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="space-y-6">
+      <!-- Assigned Nurses -->
+      <div class="space-y-4">
+        <h3 class="border-b border-primary-1 pb-2 text-lg font-semibold text-secondary-2">Enfermeros Asignados</h3>
+        <div class="space-y-3">
+          @for (nurse of appointment.nurses; track nurse.id) {
+          <div class="flex items-center gap-3 rounded-lg bg-primary-1 p-3">
+            <div class="h-10 w-10 rounded-full bg-secondary-2 flex items-center justify-center text-white font-medium">
+              {{getInitials(nurse.name)}}
+            </div>
+            <div class="flex gap-x-3">
+              <div class="flex items-center">
+                <p class="font-medium">{{nurse.name}}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="text-sm text-primary-3">Cédula: {{nurse.document_identification}}</p>
+                <p class="text-sm text-primary-3">Email: {{nurse.email}}</p>
+                <p class="text-sm text-primary-3">Télefono: {{nurse.phone}}</p>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="space-y-4">
+        <h3 class="border-b border-primary-1 pb-2 text-lg font-semibold text-secondary-2">Ubicación</h3>
+        <div class="flex items-center gap-3">
+          <div class="rounded-full bg-primary-3 p-2 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-medium">{{appointment.patients[0].direction}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="space-y-4">
+        <h3 class="border-b border-primary-1 pb-2 text-lg font-semibold text-secondary-2">Estado</h3>
+        <div class="flex items-center gap-3">
+          @switch (appointment.status) {
+          @case ('pending') {
+          <div class="rounded-full bg-gray-400 p-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4 w-4 text-white"
+              fill="currentColor">
+              <path
+                d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
+            </svg>
+          </div>
+          <p class="font-medium">Pendiente</p>
+          }
+          @case ('started') {
+          <div class="rounded-full bg-yellow-400 p-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="h-4 w-4 text-white"
+              fill="currentColor">
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+            </svg>
+          </div>
+          <p class="font-medium">En progreso</p>
+          }
+          @case ('canceled') {
+          <div class="rounded-full bg-red-400 p-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="h-4 w-4 text-white"
+              fill="currentColor">
+              <path
+                d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z" />
+            </svg>
+          </div>
+          <p class="font-medium">Cancelada</p>
+          }
+          @case ('ended') {
+          <div class="rounded-full bg-green-500 p-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <p class="font-medium">Finalizada</p>
+          }
+          }
+        </div>
+        @if ((appointment.comments && appointment.comments.length > 0) || appointment.status === 'started') {
+        <div class="space-y-4">
+          <div class="border-b border-primary-1 pb-2 flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-secondary-2">Comentarios</h3>
+            @if (appointment.status === 'started') {
+            <button (click)="handleClickAddCommentButton()"
+              class="rounded-lg bg-secondary-2 px-4 py-2 font-medium text-white hover:bg-secondary-1 outline-none">
+              Agregar comentario
+            </button>
+            }
+          </div>
+
+          <div class="space-y-2">
+            @for (comment of appointment.comments; track comment.id) {
+            <div class="rounded-lg bg-primary-1 p-3 flex justify-between w-full">
+              <div class="grow-1 overflow-hidden">
+                <p class="text-sm font-medium">{{comment.created_at | date: 'Y-MM-dd • hh:mm a'}}</p>
+                <p class="text-sm text-primary-3 text-wrap">{{comment.description}}</p>
+              </div>
+              @if (appointment.status === 'started') {
+              <button type="button" (click)="handleClickDeleteCommentButton(comment.id)"
+                class="text-secondary-2 hover:text-secondary-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }
+</app-app-layout>

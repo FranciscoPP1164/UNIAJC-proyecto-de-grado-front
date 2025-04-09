@@ -1,3 +1,57 @@
 <app-app-layout>
-  <p>appointments-index works!</p>
+  <!-- Appointments Calendar -->
+  <!-- Calendar Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h3 class="text-xl font-semibold text-secondary-2">Visualizando citas</h3>
+    </div>
+    <button class="rounded-lg bg-secondary-2 px-4 py-2 font-medium text-white hover:bg-secondary-1"
+      (click)="handleClickAddAppointmentButton()">
+      Crear cita
+    </button>
+  </div>
+
+  <!-- Appointments List -->
+  <div class="space-y-8">
+
+    @for (group of groupedAppointments; track group.day) {
+    <div>
+      <h4 class="mb-4 text-lg font-medium text-secondary-2 border-b border-primary-1 pb-2">{{group.day | date}}</h4>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        @for (appointment of group.appointments; track appointment.id) {
+        <div class="rounded-lg border-l-4 border-primary-3 bg-primary-1 p-4 hover:bg-opacity-80 cursor-pointer" (click)="handleClickDetailAppointmentButton(appointment.id)">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full" [ngClass]="{
+              'bg-gray-400': appointment.status === 'pending',
+              'bg-yellow-400': appointment.status === 'started',
+              'bg-red-400': appointment.status === 'canceled',
+              'bg-green-400': appointment.status === 'ended',
+            }">
+            </span>
+            <span class="text-sm font-medium" [ngClass]="{
+              'text-gray-400': appointment.status === 'pending',
+              'text-yellow-400': appointment.status === 'started',
+              'text-red-400': appointment.status === 'canceled',
+              'text-green-400': appointment.status === 'ended',
+            }">
+            @switch (appointment.status) {
+              @case ('pending') {Pendiente}
+              @case ('started') {En progreso}
+              @case ('canceled') {Cancelada}
+              @case ('ended') {Finalizada}
+
+            }
+            </span>
+          </div>
+          <p class="font-medium text-secondary-2">
+            {{appointment.start_datetime | date: 'hh:mm a'}} - {{appointment.end_datetime | date: 'hh:mm a'}}
+          </p>
+          <p class="text-sm text-primary-3">{{appointment.tittle}}</p>
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+
 </app-app-layout>

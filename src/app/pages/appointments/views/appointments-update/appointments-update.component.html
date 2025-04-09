@@ -1,1 +1,10 @@
-<p>appointments-update works!</p>
+<app-app-layout>
+  <div class="mb-4">
+    <h1 class="text-secondary-2 text-3xl">Crear cita</h1>
+  </div>
+
+  @if (appointment && patients && clients) {
+  <app-appointment-form (onSubmit)="handleSubmitUpdateAppointmentForm($event)" [appointment]="appointment" [patients]="patients"
+    [clients]="clients" />
+  }
+</app-app-layout>

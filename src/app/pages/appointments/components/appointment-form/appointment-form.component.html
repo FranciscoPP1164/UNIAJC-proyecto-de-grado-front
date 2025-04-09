@@ -1,0 +1,189 @@
+<div class="rounded-lg bg-white p-6 shadow-lg">
+  <form class="space-y-6" [formGroup]="formAppointment" (submit)="handleSubmitFormAppointment()">
+    <!-- Title -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">Título</label>
+      <input type="text"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+        placeholder="Ej: Consulta de seguimiento" formControlName="tittle">
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">Descripción</label>
+      <textarea rows="4"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+        placeholder="Detalles de la cita" formControlName="description"></textarea>
+    </div>
+
+    <!-- Date & Time Range -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div>
+        <label class="mb-2 block font-medium text-secondary-2">Fecha y hora de inicio</label>
+        <input type="datetime-local"
+          class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+          formControlName="start_datetime">
+      </div>
+      <div>
+        <label class="mb-2 block font-medium text-secondary-2">Fecha y hora de fin</label>
+        <input type="datetime-local"
+          class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+          formControlName="end_datetime">
+      </div>
+    </div>
+
+    @if (!appointment) {
+    <!-- Client Search Select -->
+    <div class="relative">
+      <label class="mb-2 block font-medium text-secondary-2">Cliente</label>
+      <div class="relative">
+        <input type="text" placeholder="Buscar cliente..."
+          class="w-full rounded-lg border-2 border-primary-1 p-3 pr-10 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+          [(ngModel)]="clientSearchQuery" [ngModelOptions]="{standalone: true}" (input)="filterClients()">
+        <div class="absolute right-3 top-3 text-primary-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+      @if (filteredClients.length > 0) {
+      <div class="absolute z-10 mt-1 w-full rounded-lg border border-primary-1 bg-white shadow-lg">
+        <ul class="max-h-60 overflow-auto">
+          @for (client of filteredClients; track client.id) {
+          <li class="cursor-pointer p-3 hover:bg-primary-1" (click)="selectClient(client)">
+            {{ client.name }}
+          </li>
+          }
+        </ul>
+      </div>
+      }
+
+      @if (selectedClient) {
+      <div class="mt-2 flex items-center justify-between rounded bg-primary-1 p-2">
+        <span>{{ selectedClient.name }}</span>
+        <button type="button" (click)="clearSelection('client')" class="text-secondary-2 hover:text-secondary-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Patients Multi-select with Search (Optional) -->
+    <div class="relative">
+      <label class="mb-2 block font-medium text-secondary-2">Pacientes</label>
+      <div class="relative">
+        <input type="text" placeholder="Buscar pacientes..."
+          class="w-full rounded-lg border-2 border-primary-1 p-3 pr-10 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+          [(ngModel)]="patientSearchQuery" [ngModelOptions]="{standalone: true}" (input)="filterPatients()">
+        <div class="absolute right-3 top-3 text-primary-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+      @if (filteredPatients && filteredPatients.length > 0) {
+      <div class="absolute z-10 mt-1 w-full rounded-lg border border-primary-1 bg-white shadow-lg">
+        <ul class="max-h-60 overflow-auto">
+          @for (patient of filteredPatients; track patient.id) {
+          <li class="flex items-center p-3 hover:bg-primary-1" (click)="togglePatientSelection(patient)">
+            <input type="checkbox" [checked]="(isPatientSelected(patient))" class="mr-2 h-4 w-4 text-secondary-2">
+            <span>{{ patient.name }}</span>
+          </li>
+          }
+        </ul>
+      </div>
+      }
+
+      @if (selectedPatients.length > 0) {
+      <div class="mt-2 space-y-2">
+        @for (patient of selectedPatients; track patient.id) {
+        <div class="flex items-center justify-between rounded bg-primary-1 p-2">
+          <span>{{ patient.name }}</span>
+          <button type="button" (click)="removePatient(patient)" class="text-secondary-2 hover:text-secondary-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <button type="button"
+      class="w-full rounded-lg bg-secondary-2 py-3 px-4 font-medium text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-secondary-1 focus:ring-offset-2"
+      (click)="handleClickSearchNursesButton()">
+      Buscar enfermeros
+    </button>
+
+    @if (nurses) {
+    <!-- Nurses Multi-select with Search -->
+    <div class="relative">
+      <label class="mb-2 block font-medium text-secondary-2">Enfermeros/as</label>
+      @if (nurses.length > 0) {
+      <div class="relative">
+        <input type="text" placeholder="Buscar enfermeros..."
+          class="w-full rounded-lg border-2 border-primary-1 p-3 pr-10 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1  outline-none"
+          [(ngModel)]="nurseSearchQuery" [ngModelOptions]="{standalone: true}" (input)="filterNurses()">
+        <div class="absolute right-3 top-3 text-primary-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+      @if (filteredNurses && filteredNurses.length > 0) {
+      <div class="absolute z-10 mt-1 w-full rounded-lg border border-primary-1 bg-white shadow-lg">
+        <ul class="max-h-60 overflow-auto">
+          @for (nurse of filteredNurses; track nurse.id) {
+          <li class="flex items-center p-3 hover:bg-primary-1" (click)="toggleNurseSelection(nurse)">
+            <input type="checkbox" [checked]="isNurseSelected(nurse)" class="mr-2 h-4 w-4 text-secondary-2">
+            <span>{{ nurse.name }}</span>
+          </li>
+          }
+        </ul>
+      </div>
+      }
+      }
+      @else {
+      <label class="mb-2 block text-gray-500">No hay enfermeros disponibles</label>
+      }
+
+      @if (selectedNurses.length > 0) {
+      <div class="mt-2 space-y-2">
+        @for (nurse of selectedNurses; track nurse.id) {
+        <div class="flex items-center justify-between rounded bg-primary-1 p-2">
+          <span>{{ nurse.name }}</span>
+          <button type="button" (click)="removeNurse(nurse)" class="text-secondary-2 hover:text-secondary-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit"
+      class="w-full rounded-lg bg-secondary-2 py-3 px-4 font-medium text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-secondary-1 focus:ring-offset-2">
+      Guardar cita
+    </button>
+    }
+  </form>
+</div>

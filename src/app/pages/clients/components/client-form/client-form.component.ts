@@ -7,12 +7,11 @@ import {
 } from '@angular/forms';
 import { IClientResponse } from '../../../../interfaces/api/clients/IClient.response';
 import { IClientRequest } from '../../../../interfaces/api/clients/IClient.request';
-import { InputTextComponent } from '../../../../components/forms/inputs/input-text/input-text.component';
 
 @Component({
   selector: 'app-client-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.css',
 })

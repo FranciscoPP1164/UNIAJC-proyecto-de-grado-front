@@ -1,28 +1,81 @@
-<form class="md:w-3/5" [formGroup]="formNurse" (submit)="handleSubmitFormClient()">
-  <app-input-text [formGroup]="formNurse" label="Nombre" name="name" placeholder="Ingrese el nombre del enfermero"
-    [error]="didTrySubmitForm&&formData['name'].invalid" />
+<div class="rounded-lg bg-white p-6 shadow-lg">
+  <form class="space-y-6" [formGroup]="formNurse" (submit)="handleSubmitFormClient()">
+    <!-- Name Field -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">
+        Nombre
+        <span class="text-error">*</span>
+      </label>
+      <input type="text" placeholder="Ingrese el nombre del enfermero" formControlName="name"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+        required>
+      <p class="mt-1 text-sm text-error" [class.hidden]="!(didTrySubmitForm&&formData['name'].invalid)">
+        Este campo es requerido
+      </p>
+    </div>
 
-  <div class="flex flex-col gap-y-1 outline outline-1 outline-gray-200 p-3">
-    <label class="text-xs md:text-sm font-medium text-secondary-2">Genero</label>
-    <select formControlName="genre"
-      class="bg-white outline-none text-lg md:text-xl xl:text-2xl placeholder:text-gray-300 text-secondary-1">
-      <option value="male">Masculino</option>
-      <option value="female">Femenino</option>
-    </select>
-  </div>
+    <!-- Genre field -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">
+        Genero
+      </label>
+      <select formControlName="genre"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none">
+        <option value="male">Masculino</option>
+        <option value="female">Femenino</option>
+      </select>
+      <p class="mt-1 text-sm text-error" [class.hidden]="!(didTrySubmitForm&&formData['genre'].invalid)">
+        Este campo es requerido
+      </p>
+    </div>
 
-  <app-input-text [formGroup]="formNurse" label="Correo electrónico" name="email"
-    placeholder="Ingrese el correo electrónico del enfermero" [error]="didTrySubmitForm&&formData['email'].invalid" />
+    <!-- Email Field -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">
+        Correo electrónico
+        <span class="text-error">*</span>
+      </label>
+      <input type="email" placeholder="Ingrese el correo electrónico del enfermero" formControlName="email"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+        required>
+      <p class="mt-1 text-sm text-error" [class.hidden]="!(didTrySubmitForm&&formData['email'].invalid)">
+        Este campo es requerido
+      </p>
+    </div>
 
-  <app-input-text [formGroup]="formNurse" label="Teléfono" name="phone" placeholder="Ingrese el teléfono del enfermero"
-    [error]="didTrySubmitForm&&formData['phone'].invalid" />
+    <!-- Phone Field -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">
+        Teléfono
+        <span class="text-error">*</span>
+      </label>
+      <input type="tel" placeholder="Ingrese el teléfono del enfermero" formControlName="phone"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+        required>
+      <p class="mt-1 text-sm text-error" [class.hidden]="!(didTrySubmitForm&&formData['phone'].invalid)">
+        Este campo es requerido
+      </p>
+    </div>
 
-  <app-input-text [formGroup]="formNurse" label="Documento de identificación" name="document_identification"
-    placeholder="Ingrese el documento de identificación del enfermero"
-    [error]="didTrySubmitForm&&formData['document_identification'].invalid" />
+    <!-- ID Document Field -->
+    <div>
+      <label class="mb-2 block font-medium text-secondary-2">
+        Documento de identificación
+        <span class="text-error">*</span>
+      </label>
+      <input type="text" placeholder="Número de documento" formControlName="document_identification"
+        class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+        required>
+      <p class="mt-1 text-sm text-error"
+        [class.hidden]="!(didTrySubmitForm&&formData['document_identification'].invalid)">
+        Este campo es requerido
+      </p>
+    </div>
 
-  <button type="submit"
-    class="bg-secondary-1 hover:bg-primary-1 transition-all mt-5 py-2 px-4 md:py-3 text-xl md:text-2xl xl:text-3xl rounded-lg text-white">
-    Guardar
-  </button>
-</form>
+    <!-- Submit Button -->
+    <button type="submit"
+      class="w-full rounded-lg bg-secondary-2 py-3 px-4 font-medium text-white hover:bg-secondary-1 focus:outline-none focus:ring-2 focus:ring-secondary-1 focus:ring-offset-2 transition-colors">
+      Guardar
+    </button>
+  </form>
+</div>
