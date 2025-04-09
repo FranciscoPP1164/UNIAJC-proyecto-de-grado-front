@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SweetAlertResult } from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { RowOptionsMenuComponent } from "../../../../components/row-options-menu/row-options-menu.component";
 
 @Component({
   selector: 'app-patients-detail',
   standalone: true,
-  imports: [AppLayoutComponent, CommonModule],
+  imports: [AppLayoutComponent, CommonModule, RowOptionsMenuComponent],
   templateUrl: './patients-detail.component.html',
   styleUrl: './patients-detail.component.css',
 })
@@ -43,6 +44,13 @@ export class PatientsDetailComponent implements OnInit {
           text: error.error.errors,
         });
       });
+  }
+
+  getAge(birthdate: Date) {
+    const birthDate = new Date(birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    return age;
   }
 
   handleClickEditPatientButton(): void {
@@ -118,12 +126,31 @@ export class PatientsDetailComponent implements OnInit {
       });
   }
 
-  handleClickEditConditionButton(index: number): void {
+  handleSelectOptionMenu(id: string, action: 'edit' | 'delete'): void {
+    switch (action) {
+      case 'edit':
+        this.handleClickEditConditionButton(id);
+        break;
+
+      case 'delete':
+        this.handleClickDeleteConditionButton(id);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  handleClickEditConditionButton(id: string): void {
     if (!this.patient.conditions) {
       return;
     }
 
-    const condition = this.patient.conditions[index];
+    const condition = this.patient.conditions.find((condition)=>condition.id === id);
+
+    if (!condition) {
+      return;
+    }
 
     this.alertsService
       .ask({

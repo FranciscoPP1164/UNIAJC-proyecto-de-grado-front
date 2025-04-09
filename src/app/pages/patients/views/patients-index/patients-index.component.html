@@ -1,47 +1,60 @@
 <app-app-layout>
-  <div class="flex justify-between">
-    <h1 class="text-secondary-2 text-3xl">Pacientes</h1>
-    <div class="flex gap-x-6">
-      <button (click)="handleClickAddPatientButton()"
-        class="border-2 border-solid border-primary-3 size-10 fill-primary-3 rounded-md flex justify-center items-center hover:bg-primary-3 hover:fill-white transition">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4/5">
-          <path
-            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
-        </svg>
+  <!-- Patients Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h3 class="text-xl font-semibold text-secondary-2">Visualizando pacientes</h3>
+    </div>
+    <div class="flex gap-3">
+      <button class="rounded-lg bg-secondary-2 px-4 py-2 font-medium text-white hover:bg-secondary-1"
+        (click)="handleClickAddPatientButton()">
+        Crear paciente
       </button>
-
-      <button (click)="handleClickTrashedPatientsButton()"
-        class="border-2 border-solid border-error size-10 fill-error rounded-md flex justify-center items-center hover:bg-error hover:fill-white transition">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4/5">
-          <path
-            d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
-        </svg>
+      <button class="rounded-lg bg-error px-4 py-2 font-medium text-white hover:bg-opacity-90"
+        (click)="handleClickTrashedPatientsButton()">
+        Pacientes eliminados
       </button>
     </div>
   </div>
 
-  <table class="mt-2 w-full shadow-md rounded-sm overflow-hidden">
-    <thead class="bg-secondary-1 text-2xl text-white">
-      <tr>
-        <th class="w-1/4 font-medium p-4">Nombre</th>
-        <th class="w-1/4 font-medium p-4">Fecha de nacimiento</th>
-        <th class="w-1/4 font-medium p-4">Dirección</th>
-        <th class="w-1/4 font-medium p-4">Documento</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (patient of patients; track patient.id) {
-      <div class="absolute left-2">
-        <app-row-options-menu (onSelect)="handleSelectOptionMenu(patient.id, $event)" />
-      </div>
+  <!-- Patients Table -->
+  <div class="rounded-lg bg-white shadow-lg">
+    <!-- Table -->
+    <div>
+      <table class="w-full">
+        <!-- Table Header -->
+        <thead class="bg-secondary-2 text-white">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Nombre</th>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Fecha de nacimiento</th>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Dirección</th>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Documento</th>
+          </tr>
+        </thead>
 
-      <tr class="hover:bg-gray-50" (click)="handleClickDetailPatientButton(patient.id)">
-        <td class="px-4 py-4 text-lg">{{patient.name}}</td>
-        <td class="px-4 py-4 text-lg">{{patient.birthdate | date: 'Y-MM-dd'}}</td>
-        <td class="px-4 py-4 text-lg">{{patient.direction}}</td>
-        <td class="px-4 py-4 text-lg flex justify-center">{{patient.document_identification}}</td>
-      </tr>
-      }
-    </tbody>
-  </table>
+        <!-- Table Body -->
+        <tbody class="">
+          @for (patient of patients; track patient.id) {
+          <tr class="border-b border-b-primary-1 hover:bg-primary-1" (click)="handleClickDetailPatientButton(patient.id)">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-2">
+              {{patient.name}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3">
+              {{patient.birthdate}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3">
+              {{patient.direction}}
+            </td>
+            <td class="relative flex items-center px-6 py-4 whitespace-nowrap text-sm text-primary-3">
+              {{patient.document_identification}}
+
+              <div class="absolute right-1">
+                <app-row-options-menu (onSelect)="handleSelectOptionMenu(patient.id, $event)" />
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
 </app-app-layout>

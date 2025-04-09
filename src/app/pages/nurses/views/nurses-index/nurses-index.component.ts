@@ -7,11 +7,12 @@ import { INurseResponse } from '../../../../interfaces/api/nurses/INurse.respons
 import { HttpErrorResponse } from '@angular/common/http';
 import { SweetAlertResult } from 'sweetalert2';
 import { RowOptionsMenuComponent } from '../../../../components/row-options-menu/row-options-menu.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nurses-index',
   standalone: true,
-  imports: [AppLayoutComponent, RowOptionsMenuComponent],
+  imports: [AppLayoutComponent, RowOptionsMenuComponent, CommonModule],
   templateUrl: './nurses-index.component.html',
   styleUrl: './nurses-index.component.css',
 })

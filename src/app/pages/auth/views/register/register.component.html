@@ -1,14 +1,164 @@
 <app-auth-layout>
-  <h1 class="text-4xl text-secondary-2">Registrar contraseña</h1>
-  <form [formGroup]="formRegister" (ngSubmit)="handleSubmitFormLogin()" class="flex flex-col p-6 w-full">
-    <app-input-text [formGroup]="formRegister" label="Contraseña" name="password" placeholder="Ingrese su contraseña"
-      [error]="didTrySignIn&&formData['password'].invalid" [hidden]="true" />
-    <app-input-text [formGroup]="formRegister" label="Confirmar contraseña" name="confirm_password"
-      placeholder="Confirme la contraseña" [error]="didTrySignIn&&formData['confirm_password'].invalid"
-      [hidden]="true" />
-    <button type="submit"
-      class="bg-secondary-1 hover:bg-primary-1 transition-all mt-10 xl:mt-16 py-3 md:py-5 text-xl md:text-2xl xl:text-3xl rounded-sm text-white">
-      Registrar contraseña
-    </button>
-  </form>
+  <div class="w-4/5 px-8">
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl font-semibold text-secondary-2">Registrar contraseña</h2>
+      <p class="mt-2 text-primary-3">Cree una contraseña segura para su cuenta</p>
+    </div>
+
+    <form class="space-y-6" [formGroup]="formRegister" (submit)="handleSubmitFormLogin()">
+      <!-- Password Field -->
+      <div>
+        <label class="mb-2 block font-medium text-secondary-2">Contraseña</label>
+        <div class="relative">
+          <input [type]="isShowPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña"
+            formControlName="password" (input)="handleChangeInputPassword()"
+            class="w-full rounded-lg border-2 border-primary-1 p-3 pr-10 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+            required>
+          <div class="absolute right-3 top-3 text-primary-3 rounded-md hover:bg-opacity-30 hover:bg-primary-3"
+            (click)="handleClickShowPasswordButton()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div>
+        <label class="mb-2 block font-medium text-secondary-2">Confirmar contraseña</label>
+        <div class="relative">
+          <input [type]="isShowConfirmPassword ? 'text' : 'password'" placeholder="Confirme la contraseña"
+            formControlName="confirm_password" (input)="handleChangeInputPassword()"
+            class="w-full rounded-lg border-2 border-primary-1 p-3 pr-10 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+            required>
+          <div class="absolute right-3 top-3 text-primary-3 rounded-md hover:bg-opacity-30 hover:bg-primary-3"
+            (click)="handleClickShowConfirmPasswordButton()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+        </div>
+        @if (didTrySignIn && formData['password'].value !== formData['confirm_password'].value) {
+        <p class="mt-1 hidden text-xs text-error">Las contraseñas no coinciden</p>
+        }
+      </div>
+
+      <!-- Password Strength Indicator -->
+      <div class="rounded-lg bg-primary-1 p-3">
+        <h4 class="mb-2 text-sm font-medium text-secondary-2">Requisitos de contraseña:</h4>
+        <ul class="space-y-1 text-sm text-primary-3">
+          <li class="flex items-center">
+            @if (passwordRequirements.minLength) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-green-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            Al menos 8 caracteres
+          </li>
+          <li class="flex items-center">
+            @if (passwordRequirements.hasMixedCase) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-green-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            Al menos 1 minuscula y mayuscula
+          </li>
+          <li class="flex items-center">
+            @if (passwordRequirements.hasNumber) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-green-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            Al menos 1 número
+          </li>
+          <li class="flex items-center">
+            @if (passwordRequirements.hasSpecialChar) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-green-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            Al menos 1 símbolo especial
+          </li>
+          <li class="flex items-center">
+            @if (passwordRequirements.passwordsMatch) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-green-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+            Las contraseñas deben coincidir
+          </li>
+        </ul>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+        [disabled]="!passwordRequirements.minLength || !passwordRequirements.hasMixedCase ||!passwordRequirements.hasNumber ||!passwordRequirements.hasSpecialChar ||!passwordRequirements.passwordsMatch"
+        class="w-full rounded-lg bg-secondary-2 py-3 px-4 font-medium text-white hover:bg-secondary-1 focus:outline-none focus:ring-2 disabled:bg-primary-1 focus:ring-secondary-1 focus:ring-offset-2">
+        Registrar contraseña
+      </button>
+    </form>
+  </div>
 </app-auth-layout>

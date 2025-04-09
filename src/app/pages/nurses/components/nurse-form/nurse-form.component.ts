@@ -38,6 +38,7 @@ export class NurseFormComponent {
         this.nurse?.document_identification,
         [Validators.required],
       ],
+      status: [this.nurse?.status ?? 'active', [Validators.required]],
     });
   }
 

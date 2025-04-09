@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthLayoutComponent } from '../../../../layouts/auth/auth-layout/auth-layout.component';
 import {
   FormBuilder,
@@ -11,12 +11,11 @@ import { AlertsService } from '../../../../services/utils/alerts.service';
 import { AuthService } from '../../../../services/api/auth.service';
 import { IRegisterRequest } from '../../../../interfaces/api/auth/IRegister.request';
 import { HttpErrorResponse } from '@angular/common/http';
-import { InputTextComponent } from '../../../../components/forms/inputs/input-text/input-text.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [AuthLayoutComponent, InputTextComponent, ReactiveFormsModule],
+  imports: [AuthLayoutComponent, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -26,6 +25,17 @@ export class RegisterComponent implements OnInit {
 
   public formRegister!: FormGroup;
   public didTrySignIn: boolean = false;
+
+  public passwordRequirements = {
+    minLength: false,
+    hasMixedCase: false,
+    hasNumber: false,
+    hasSpecialChar: false,
+    passwordsMatch: false,
+  };
+
+  public isShowPassword = false;
+  public isShowConfirmPassword = false;
 
   public constructor(
     private route: ActivatedRoute,
@@ -56,6 +66,29 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required]],
       confirm_password: ['', [Validators.required]],
     });
+  }
+
+  public handleChangeInputPassword(): void {
+    const password = this.formData['password'].value;
+    const confirmPassword = this.formData['confirm_password'].value;
+
+    const validations = {
+      minLength: password.length >= 8,
+      hasMixedCase: /^(?=.*[a-z])(?=.*[A-Z])/.test(password),
+      hasNumber: /\d/.test(password),
+      hasSpecialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+      passwordsMatch: password !== '' && confirmPassword !== '' && password === confirmPassword,
+    };
+
+    this.passwordRequirements = validations;
+  }
+
+  public handleClickShowPasswordButton(): void {
+    this.isShowPassword = !this.isShowPassword;
+  }
+
+  public handleClickShowConfirmPasswordButton(): void {
+    this.isShowConfirmPassword = !this.isShowConfirmPassword;
   }
 
   public handleSubmitFormLogin(): void {

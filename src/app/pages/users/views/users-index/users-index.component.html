@@ -1,43 +1,66 @@
 <app-app-layout>
-  <div class="flex justify-between">
-    <h1 class="text-secondary-2 text-3xl">Usuarios</h1>
-    <button (click)="handleClickAddUserButton()"
-      class="border-2 border-solid border-primary-3 size-10 fill-primary-3 rounded-md flex justify-center items-center hover:bg-primary-3 hover:fill-white transition">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4/5">
-        <path
-          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
-      </svg>
-    </button>
+  <!-- Users Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h3 class="text-xl font-semibold text-secondary-2">Visualizando usuarios</h3>
+    </div>
+    <div class="flex gap-3">
+      <button class="rounded-lg bg-secondary-2 px-4 py-2 font-medium text-white hover:bg-secondary-1"
+        (click)="handleClickAddUserButton()">
+        Crear usuario
+      </button>
+    </div>
   </div>
 
-  <table class="mt-2 w-full shadow-md rounded-sm overflow-hidden">
-    <thead class="bg-secondary-1 text-2xl text-white">
-      <tr>
-        <th class="w-1/4 font-medium p-4">Usuario</th>
-        <th class="w-1/4 font-medium p-4">Correo</th>
-        <th class="w-1/4 font-medium p-4">Perfil</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (user of users; track user.id) {
-      @if (user.type !== 'root') {
-      <div class="absolute left-2">
-        <app-row-options-menu (onSelect)="handleSelectOptionMenu(user.id, $event)" />
-      </div>
-      }
+  <!-- Users Table -->
+  <div class="rounded-lg bg-white shadow-lg">
+    <!-- Table -->
+    <div>
+      <table class="w-full">
+        <!-- Table Header -->
+        <thead class="bg-secondary-2 text-white">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Nombre</th>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Correo</th>
+            <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Perfil</th>
+          </tr>
+        </thead>
 
-      <tr class="hover:bg-gray-50" [ngClass]="{'text-gray-400 !bg-gray-300': user.status === 'inactive'}">
-        <td class="px-4 py-3 text-lg">{{user.name}}</td>
-        <td class="px-4 py-3 text-lg">{{user.email}}</td>
-        <td class="px-4 py-3 text-lg">
-          @switch (user.type) {
-          @case ('root') {Raiz}
-          @case ('admin') {Administrador}
-          @case ('nurse') {Enfermero}
+        <!-- Table Body -->
+        <tbody class="">
+          @for (user of users; track user.id) {
+          <tr class="border-b border-b-primary-1" [ngClass]="{
+            '!bg-gray-200': user.status === 'inactive'
+            }">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-2" [ngClass]="{
+            '!text-gray-500': user.status === 'inactive'
+            }">
+              {{user.name}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3" [ngClass]="{
+            '!text-gray-500': user.status === 'inactive'
+            }">
+              {{user.email}}
+            </td>
+            <td class="relative flex items-center px-6 py-4 whitespace-nowrap text-sm text-primary-3" [ngClass]="{
+            '!text-gray-500': user.status === 'inactive'
+            }">
+              @switch (user.type) {
+              @case ('root') {Raiz}
+              @case ('admin') {Administrador}
+              @case ('nurse') {Enfermero}
+              }
+
+              @if (user.type !== 'root') {
+              <div class="absolute right-1">
+                <app-row-options-menu (onSelect)="handleSelectOptionMenu(user.id, $event)" />
+              </div>
+              }
+            </td>
+          </tr>
           }
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </app-app-layout>

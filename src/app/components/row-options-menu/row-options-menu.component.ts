@@ -11,11 +11,13 @@ export class RowOptionsMenuComponent {
   @Output() onSelect = new EventEmitter<'edit' | 'delete'>();
   isMenuOpen = false;
 
-  toggleMenu() {
+  toggleMenu(event: Event) {
     this.isMenuOpen = !this.isMenuOpen;
+    event.stopPropagation();
   }
 
-  onOptionClick(option: 'edit' | 'delete') {
+  onOptionClick(option: 'edit' | 'delete', event: Event) {
+    event.stopPropagation();
     this.onSelect.emit(option);
     this.isMenuOpen = false;
   }

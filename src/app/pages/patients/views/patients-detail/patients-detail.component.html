@@ -1,5 +1,5 @@
 <app-app-layout>
-  <div class="flex justify-between">
+  <!-- <div class="flex justify-between">
     <h1 class="text-secondary-2 text-3xl">Detalle del paciente</h1>
     <div class="flex gap-x-6">
       <button (click)="handleClickEditPatientButton()"
@@ -101,6 +101,84 @@
     @else {
     <span class="text-gray-400">No hay condiciones registradas para este paciente</span>
     }
+  </div> -->
+
+  <div class="rounded-lg bg-white shadow-lg overflow-hidden mb-6">
+    <!-- Patient Basic Info -->
+    <div class="bg-primary-1 px-6 py-4 border-b border-secondary-1">
+      <h3 class="text-lg font-medium text-secondary-2">Información básica</h3>
+    </div>
+    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <div>
+          <p class="text-sm font-medium text-primary-3">Nombre completo</p>
+          <p class="text-secondary-2">{{patient.name}}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-primary-3">Fecha de nacimiento</p>
+          <p class="text-secondary-2">{{patient.birthdate | date: 'Y-MM-dd'}} {{getAge(patient.birthdate)}}</p>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <p class="text-sm font-medium text-primary-3">Dirección</p>
+          <p class="text-secondary-2">{{patient.direction}}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-primary-3">Documento de identificación</p>
+          <p class="text-secondary-2">{{patient.document_identification}}</p>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Patient Conditions Card -->
+  <div class="rounded-lg bg-white shadow-lg">
+    <div class="bg-primary-1 px-6 py-4 border-b border-secondary-1">
+      <h3 class="text-lg font-medium text-secondary-2">Condiciones del paciente</h3>
+    </div>
+    <div class="p-6">
+      @if (patient.conditions && patient.conditions.length > 0) {
+      <div >
+        <table class="min-w-full divide-y divide-primary-1">
+          <thead class="bg-primary-2">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-2 uppercase tracking-wider">
+                Descripción
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-2 uppercase tracking-wider">
+                Opciones
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-primary-1">
+            @for (condition of patient.conditions; track condition.id) {
+            <!-- Condition Row -->
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-2">
+                {{condition.description}}
+              </td>
+              <td class="relative px-6 py-4 whitespace-nowrap text-sm text-primary-3">
+                <div class="absolute">
+                  <app-row-options-menu (onSelect)="handleSelectOptionMenu(condition.id, $event)"/>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      }
+
+      <!-- Add New Condition Button -->
+      <div class="mt-4">
+        <button class="rounded-lg bg-secondary-2 px-4 py-2 text-sm font-medium text-white hover:bg-secondary-1"
+          (click)="handleClickAddConditionButton()">
+          Añadir condición
+        </button>
+      </div>
+    </div>
+  </div>
+
 
 </app-app-layout>

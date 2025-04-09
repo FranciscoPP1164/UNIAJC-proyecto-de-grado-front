@@ -15,11 +15,11 @@
       </button>
     </div>
   </div>
-  <!-- Nurses Table -->
 
-  <div class="rounded-lg bg-white shadow-lg overflow-hidden">
+  <!-- Nurses Table -->
+  <div class="rounded-lg bg-white shadow-lg">
     <!-- Table -->
-    <div class="overflow-x-auto">
+    <div>
       <table class="w-full">
         <!-- Table Header -->
         <thead class="bg-secondary-2 text-white">
@@ -34,23 +34,43 @@
 
         <!-- Table Body -->
         <tbody class="">
-          <!-- Client 1 -->
           @for (nurse of nurses; track nurse.id) {
-          <div class="absolute left-2">
-            <app-row-options-menu (onSelect)="handleSelectOptionMenu(nurse.id, $event)" />
-          </div>
-
-          <tr class="hover:bg-primary-1 border-b border-b-primary-1">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-2">{{nurse.name}}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3">
+          <tr class="border-b border-b-primary-1" [ngClass]="{
+            '!bg-gray-200': nurse.status === 'inactive'
+            }">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-2"
+              [ngClass]="{
+            '!text-gray-500': nurse.status === 'inactive'
+            }">
+              {{nurse.name}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3" [ngClass]="{
+            '!text-gray-500': nurse.status === 'inactive'
+            }">
               @switch (nurse.genre) {
               @case ('male') {Masculino}
               @case ('female') {Femenino}
               }
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3">{{nurse.email}}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3">{{nurse.phone}}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3">{{nurse.document_identification}}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3" [ngClass]="{
+            '!text-gray-500': nurse.status === 'inactive'
+            }">
+              {{nurse.email}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-3" [ngClass]="{
+            '!text-gray-500': nurse.status === 'inactive'
+            }">
+              {{nurse.phone}}
+            </td>
+            <td class="relative flex items-center px-6 py-4 whitespace-nowrap text-sm text-primary-3" [ngClass]="{
+            '!text-gray-500': nurse.status === 'inactive'
+            }">
+              {{nurse.document_identification}}
+
+              <div class="absolute right-1">
+                <app-row-options-menu (onSelect)="handleSelectOptionMenu(nurse.id, $event)" />
+              </div>
+            </td>
           </tr>
           }
         </tbody>
