@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
     },
     eventDidMount: this.eventDidMounth.bind(this),
     eventClick: this.handleEventClick.bind(this),
-
   };
 
   constructor(
@@ -74,6 +73,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  public handleClickAddAppointmentButton() {
+    this.router.navigateByUrl('appointments/create');
+  }
+
   eventDidMounth(event: EventMountArg) {
     const color = this.getColor(event.event.extendedProps['status']);
 
@@ -88,6 +91,6 @@ export class HomeComponent implements OnInit {
   handleEventClick(event: EventClickArg) {
     const eventId = event.event._def.publicId;
 
-    this.router.navigateByUrl(`appointments/detail/${eventId}`)
+    this.router.navigateByUrl(`appointments/detail/${eventId}`);
   }
 }
