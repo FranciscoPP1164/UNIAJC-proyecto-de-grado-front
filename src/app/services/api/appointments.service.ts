@@ -23,29 +23,23 @@ export class AppointmentsService extends GenericCrudService<
   }
 
   public allWithFilters(
-    page: number = 1,
-    rowsPerPage: number = 10,
     startDateTime?: Date,
     endDateTime?: Date,
     status?: AppointmentStatus
-  ): Promise<IPagination<IAppointmentResponse>> {
-    return new Promise<IPagination<IAppointmentResponse>>((resolve, reject) => {
-      const params: { [key: string]: string | number } = {
-        page,
-        rowsPerPage,
-      };
+  ): Promise<IAppointmentResponse[]> {
+    return new Promise<IAppointmentResponse[]>((resolve, reject) => {
+      const params: { [key: string]: string | number } = {};
 
       if (startDateTime) params['startDateTime'] = startDateTime.toString();
       if (endDateTime) params['endDateTime'] = endDateTime.toString();
       if (status) params['status'] = status;
 
       this.http
-        .get<IPagination<IAppointmentResponse>>(
-          `${this.url}/${this.service}/filter`,
-          { params }
-        )
+        .get<IAppointmentResponse[]>(`${this.url}/${this.service}/filters`, {
+          params,
+        })
         .subscribe({
-          next: (appointments: IPagination<IAppointmentResponse>) => {
+          next: (appointments: IAppointmentResponse[]) => {
             return resolve(appointments);
           },
           error: (error: HttpErrorResponse) => {

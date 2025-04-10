@@ -1,3 +1,11 @@
 <app-app-layout>
-  <h1>Home works</h1>
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold text-secondary-2">Calendario de Citas</h2>
+    <button routerLink="/appointments/new"
+      class="rounded-lg bg-secondary-2 px-4 py-2 text-white hover:bg-secondary-1 transition-colors">
+      + Nueva Cita
+    </button>
+  </div>
+
+  <full-calendar [options]="calendarOptions"></full-calendar>
 </app-app-layout>

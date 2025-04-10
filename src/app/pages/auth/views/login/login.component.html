@@ -1,5 +1,5 @@
 <app-auth-layout>
-  <h1 class="text-4xl text-secondary-2">Iniciar sesión</h1>
+  <!-- <h1 class="text-4xl text-secondary-2">Iniciar sesión</h1>
   <form [formGroup]="formLogin" (ngSubmit)="handleSubmitFormLogin()" class="flex flex-col p-6 w-full">
     <app-input-text [formGroup]="formLogin" label="Usuario" name="name" placeholder="Ingrese su nombre de usuario"
       [error]="didTrySignIn&&formData['name'].invalid" />
@@ -12,5 +12,70 @@
     <span class="text-center mt-7 text-secondary-2 xl:text-lg">
       ¿No tienes una cuenta? <a routerLink="../signup" class="text-primary-3">Crea una</a>
     </span>
-  </form>
+  </form> -->
+
+  <!-- Login Card -->
+  <div class="w-4/5 px-8">
+    <!-- Card Header -->
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl font-semibold text-secondary-2">Iniciar sesión</h2>
+      <p class="mt-2 text-primary-3">Use sus credenciales para iniciar sesión</p>
+    </div>
+
+    <!-- Card Body -->
+    <form class="space-y-6" [formGroup]="formLogin" (ngSubmit)="handleSubmitFormLogin()">
+      <!-- Username Field -->
+      <div>
+        <label class="block text-sm font-medium text-secondary-2 mb-1">Usuario</label>
+        <input type="text" placeholder="Ingrese su nombre de usuario" formControlName="name"
+          class="w-full rounded-lg border-2 border-primary-1 p-3 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+          required>
+      </div>
+
+      <!-- Password Field -->
+      <div>
+        <label class="block text-sm font-medium text-secondary-2 mb-1">Contraseña</label>
+        <div class="relative">
+          <input [type]="isShowPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña" formControlName="password"
+            class="w-full rounded-lg border-2 border-primary-1 p-3 pr-10 focus:border-secondary-1 focus:ring-2 focus:ring-secondary-1 outline-none"
+            required>
+          <div class="absolute right-3 top-3 text-primary-3 rounded-md hover:bg-opacity-30 hover:bg-primary-3"
+            (click)="handleClickShowPasswordButton()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Remember Me & Forgot Password -->
+      <!-- <div class="flex items-center justify-between">
+        <label class="flex items-center">
+          <input type="checkbox" class="h-4 w-4 rounded border-primary-3 text-secondary-2 focus:ring-secondary-1">
+          <span class="ml-2 text-sm text-primary-3">Recordar sesión</span>
+        </label>
+        <a href="#" class="text-sm font-medium text-primary-3 hover:text-secondary-2">
+          ¿Olvidó su contraseña?
+        </a>
+      </div> -->
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="w-full rounded-lg bg-secondary-2 py-3 px-4 font-medium text-white hover:bg-secondary-1 focus:outline-none focus:ring-2 focus:ring-secondary-1 focus:ring-offset-2">
+        Iniciar sesión
+      </button>
+    </form>
+
+    <!-- Signup Link -->
+    <!-- <div class="mt-4 text-center">
+      <p class="text-sm text-primary-3">
+        ¿No tienes una cuenta?
+        <a href="#" class="font-medium text-secondary-2 hover:text-secondary-1">Crea una</a>
+      </p>
+    </div> -->
+  </div>
 </app-auth-layout>

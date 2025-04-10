@@ -15,18 +15,15 @@ import { AuthLayoutComponent } from '../../../../layouts/auth/auth-layout/auth-l
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    RouterModule,
-    ReactiveFormsModule,
-    AuthLayoutComponent,
-    InputTextComponent,
-  ],
+  imports: [RouterModule, ReactiveFormsModule, AuthLayoutComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
   public formLogin!: FormGroup;
   public didTrySignIn: boolean = false;
+
+  public isShowPassword = false;
 
   public constructor(
     private router: Router,
@@ -44,6 +41,10 @@ export class LoginComponent implements OnInit {
       name: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
+  }
+
+  public handleClickShowPasswordButton(): void {
+    this.isShowPassword = !this.isShowPassword;
   }
 
   public handleSubmitFormLogin(): void {

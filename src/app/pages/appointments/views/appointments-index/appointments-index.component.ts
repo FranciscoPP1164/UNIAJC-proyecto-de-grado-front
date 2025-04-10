@@ -55,7 +55,7 @@ export class AppointmentsIndexComponent implements OnInit {
     this.appointmentsService
       .allWithFilters()
       .then((appointments) => {
-        this.appointments = appointments.data;
+        this.appointments = appointments;
       })
       .catch((error: HttpErrorResponse) => {
         this.alertsService.make({
